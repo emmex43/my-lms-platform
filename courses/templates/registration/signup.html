@@ -1,0 +1,31 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+<div
+    style="max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h2 style="text-align: center;">Join the Platform</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div style="margin-bottom: 15px;">
+            <label style="display:block; margin-bottom: 5px;">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+            <small style="color: #666; display: block; margin-top: 5px;">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+            <p style="color: red; font-size: 0.9em;">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn" style="width: 100%;">Sign Up</button>
+    </form>
+
+    <p style="text-align: center; margin-top: 20px;">
+        Already have an account? <a href="{% url 'login' %}">Log In</a>
+    </p>
+</div>
+{% endblock %}

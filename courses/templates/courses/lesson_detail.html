@@ -1,0 +1,31 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+<div class="lesson-container">
+    <small style="color: #666;">Course: {{ lesson.course.title }}</small>
+    <h1>{{ lesson.title }}</h1>
+
+    {% if lesson.video_url %}
+    <div class="video-container">
+        {% if lesson.get_video_id %}
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/{{ lesson.get_video_id }}" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+        {% else %}
+        <a href="{{ lesson.video_url }}" target="_blank">Watch Video (External Link)</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="lesson-content" style="line-height: 1.6; font-size: 1.1rem;">
+        {{ lesson.content|linebreaks }}
+    </div>
+
+    <hr style="margin: 30px 0;">
+
+    <div style="display: flex; justify-content: space-between;">
+        <a href="{% url 'course_detail' lesson.course.id %}">← Back to Syllabus</a>
+    </div>
+</div>
+{% endblock %}

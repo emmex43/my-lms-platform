@@ -1,0 +1,65 @@
+/* General Reset */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+}
+
+/* Navbar */
+nav {
+    background-color: #2c3e50; /* Dark Blue */
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+nav a {
+    color: #ecf0f1;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+}
+nav a:hover { color: #3498db; }
+
+/* Layout */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Course Cards */
+.course-card {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+.course-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+}
+.course-card h2 { margin-top: 0; color: #2c3e50; }
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.btn:hover { background-color: #2980b9; }
+
+/* Lesson List */
+.lesson-list { list-style: none; padding: 0; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; }
+.lesson-item { 
+    background: white; 
+    border-bottom: 1px solid #eee; 
+    padding: 15px; 
+}
+.lesson-item:last-child { border-bottom: none; }
+.lesson-item:hover { background-color: #f1faff; }

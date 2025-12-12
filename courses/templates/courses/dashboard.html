@@ -1,0 +1,27 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+<h1 style="border-bottom: 2px solid #3498db; padding-bottom: 10px;">My Learning Dashboard</h1>
+
+<div style="margin-top: 20px;">
+    {% if courses %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+        {% for course in courses %}
+        <div class="course-card">
+            <img src="{{ course.image_url }}" alt="Course Image"
+                style="width:100%; height:150px; object-fit: cover; border-radius: 5px;">
+            <h3>{{ course.title }}</h3>
+            <p>{{ course.description|truncatewords:20 }}</p>
+            <a href="{% url 'course_detail' course.id %}" class="btn">Continue Learning →</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 50px; background: white; border-radius: 8px;">
+        <h3>You haven't joined any classes yet!</h3>
+        <p>Browse our catalog to start learning.</p>
+        <a href="{% url 'course_list' %}" class="btn">Browse Courses</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

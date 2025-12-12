@@ -1,0 +1,46 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+<div class="course-header">
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.description|linebreaks }}</p>
+
+    <div style="margin-top: 20px; margin-bottom: 20px;">
+        {% if user.is_authenticated %}
+        {% if user in course.students.all %}
+        <button class="btn" style="background-color: #27ae60; cursor: default;">✅ You are Enrolled</button>
+        {% else %}
+        <a href="{% url 'enroll_course' course.id %}" class="btn">Join This Class</a>
+        {% endif %}
+        {% else %}
+        <a href="{% url 'login' %}" class="btn" style="background-color: #7f8c8d;">Login to Enroll</a>
+        {% endif %}
+    </div>
+</div>
+
+<hr>
+
+<h3>Syllabus</h3>
+<ul class="lesson-list">
+    {% for lesson in course.lessons.all %}
+    <li class="lesson-item">
+        <a href="{% url 'lesson_detail' course.id lesson.id %}"
+            style="text-decoration: none; color: #333; display: block;">
+            <strong>Lesson {{ forloop.counter }}:</strong>
+            {{ lesson.title }}
+
+            {% if user.is_authenticated %}
+            <span style="float:right; color: #3498db;">Start ▶</span>
+            {% else %}
+            <span style="float:right; color: #666;">🔒 Login to View</span>
+            {% endif %}
+        </a>
+    </li>
+    {% empty %}
+    <li>No lessons added yet.</li>
+    {% endfor %}
+</ul>
+
+<br>
+<a href="{% url 'course_list' %}">← Back to All Courses</a>
+{% endblock %}
