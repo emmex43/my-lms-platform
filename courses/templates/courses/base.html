@@ -19,7 +19,8 @@
 
             <div>
                 {% if user.is_authenticated %}
-                <span style="margin-right: 15px; color: #bdc3c7;">Hello, {{ user.username }}</span>
+                <span style="margin-right: 15px;">Hello, {{ user.username }}</span>
+                <a href="{% url 'create_course' %}" style="margin-right: 15px; color: #f1c40f;">Teach</a>
 
                 <form action="{% url 'logout' %}" method="post" style="display: inline;">
                     {% csrf_token %}

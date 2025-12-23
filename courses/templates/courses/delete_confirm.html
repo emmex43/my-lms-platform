@@ -1,0 +1,16 @@
+{% extends 'courses/base.html' %}
+{% block content %}
+<div class="form-card" style="text-align: center;">
+    <h2 style="color: #e74c3c;">⚠️ Delete Course?</h2>
+    <p>Are you sure you want to delete <strong>"{{ course.title }}"</strong>?</p>
+    <p>This action cannot be undone.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn" style="background: #e74c3c; width: 100%;">Yes, Delete it</button>
+    </form>
+    
+    <br>
+    <a href="{% url 'course_detail' course.id %}" style="color: #666;">Cancel</a>
+</div>
+{% endblock %}

@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 
 class Course(models.Model):
+    instructor = models.ForeignKey(
+        User, related_name='courses_taught', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
     image_url = models.URLField(default="https://placehold.co/600x400")
@@ -33,6 +35,12 @@ class Lesson(models.Model):
         return self.title
 
     def get_video_id(self):
-        if self.video_url and "v=" in self.video_url:
-            return self.video_url.split("v=")[1]
+        if not self.video_url:
+            return None
+        # Handle standard URLs (youtube.com/watch?v=...)
+        if "v=" in self.video_url:
+            return self.video_url.split("v=")[1].split("&")[0]
+        # Handle short URLs (youtu.be/...)
+        elif "youtu.be" in self.video_url:
+            return self.video_url.split("/")[-1]
         return None

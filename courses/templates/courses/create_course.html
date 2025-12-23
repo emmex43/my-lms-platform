@@ -1,0 +1,29 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+<div class="form-card">
+    <h2 style="text-align: center; margin-bottom: 30px; color: #34495e;">Manage Course</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+            <label style="font-weight: bold; display: block; margin-bottom: 5px;">{{ field.label }}</label>
+
+            {{ field }}
+
+            {% if field.help_text %}
+            <small style="color: #7f8c8d;">{{ field.help_text }}</small>
+            {% endif %}
+
+            {% for error in field.errors %}
+            <div style="color: red; font-size: 0.9rem; margin-top: 5px;">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Save Course</button>
+    </form>
+</div>
+{% endblock %}

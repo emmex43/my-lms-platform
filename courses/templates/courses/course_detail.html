@@ -5,6 +5,20 @@
     <h1>{{ course.title }}</h1>
     <p>{{ course.description|linebreaks }}</p>
 
+    {% if user == course.instructor or user.is_superuser %}
+    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffeeba;">
+        <strong style="color: #856404;">👨‍🏫 Instructor Tools (Admin Access):</strong>
+        <div style="margin-top: 10px;">
+            <a href="{% url 'edit_course' course.id %}" class="btn"
+                style="background: #f39c12; padding: 5px 15px; font-size: 0.9rem;">✏️ Edit</a>
+            <a href="{% url 'delete_course' course.id %}" class="btn"
+                style="background: #c0392b; padding: 5px 15px; font-size: 0.9rem;">🗑️ Delete</a>
+            <a href="{% url 'add_lesson' course.id %}" class="btn"
+                style="background: #27ae60; padding: 5px 15px; font-size: 0.9rem; margin-left: 10px;">➕ Add Lesson</a>
+        </div>
+    </div>
+    {% endif %}
+
     <div style="margin-top: 20px; margin-bottom: 20px;">
         {% if user.is_authenticated %}
         {% if user in course.students.all %}
