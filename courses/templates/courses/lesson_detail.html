@@ -27,5 +27,51 @@
 
     <hr style="margin: 40px 0;">
 
+    {% if lesson.quiz_question %}
+    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border: 1px solid #ddd; margin-top: 30px;">
+        <h3 style="margin-top: 0; color: #2c3e50;">📝 Quick Quiz</h3>
+
+        {% if quiz_result %}
+        <div class="quiz-result {% if 'Correct' in quiz_result %}quiz-success{% else %}quiz-error{% endif %}">
+            {{ quiz_result }}
+        </div>
+        {% endif %}
+        <p style="font-size: 1.2rem; font-weight: bold; margin-bottom: 15px;">{{ lesson.quiz_question }}</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div style="margin-bottom: 10px;">
+                <label
+                    style="cursor: pointer; display: block; padding: 10px; background: white; border: 1px solid #eee; border-radius: 5px;">
+                    <input type="radio" name="answer" value="A" required style="margin-right: 10px;">
+                    <strong style="color: #3498db;">A:</strong> {{ lesson.option_a }}
+                </label>
+            </div>
+
+            <div style="margin-bottom: 10px;">
+                <label
+                    style="cursor: pointer; display: block; padding: 10px; background: white; border: 1px solid #eee; border-radius: 5px;">
+                    <input type="radio" name="answer" value="B" style="margin-right: 10px;">
+                    <strong style="color: #3498db;">B:</strong> {{ lesson.option_b }}
+                </label>
+            </div>
+
+            <div style="margin-bottom: 10px;">
+                <label
+                    style="cursor: pointer; display: block; padding: 10px; background: white; border: 1px solid #eee; border-radius: 5px;">
+                    <input type="radio" name="answer" value="C" style="margin-right: 10px;">
+                    <strong style="color: #3498db;">C:</strong> {{ lesson.option_c }}
+                </label>
+            </div>
+
+            <button type="submit" class="btn"
+                style="background-color: #3498db; color: white; margin-top: 15px; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;">
+                Check Answer
+            </button>
+        </form>
+    </div>
+    {% endif %}
+
 </div>
 {% endblock %}

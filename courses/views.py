@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .forms import CourseForm, LessonForm
-from .models import Course, Lesson
+from .forms import CourseForm, LessonForm, ProfileForm
+from .models import Course, Lesson, Profile
 
 # 1. View to list all courses
 
@@ -26,8 +26,24 @@ def course_detail(request, course_id):
 def lesson_detail(request, course_id, lesson_id):
     course = get_object_or_404(Course, pk=course_id)
     lesson = get_object_or_404(Lesson, pk=lesson_id)
-    # We send BOTH 'course' and 'lesson' so the back button works
-    return render(request, 'courses/lesson_detail.html', {'course': course, 'lesson': lesson})
+
+    quiz_result = None  # Variable to store if they got it right or wrong
+
+    # Check if the student submitted an answer
+    if request.method == 'POST':
+        # Get the answer they clicked (A, B, or C)
+        student_answer = request.POST.get('answer')
+
+        if student_answer == lesson.correct_answer:
+            quiz_result = "Correct! 🎉"
+        else:
+            quiz_result = "Incorrect. Try again! ❌"
+
+    return render(request, 'courses/lesson_detail.html', {
+        'course': course,
+        'lesson': lesson,
+        'quiz_result': quiz_result  # Send the result to the page
+    })
 
 # 4. Student Signup
 
@@ -141,3 +157,19 @@ def add_lesson(request, course_id):
         form = LessonForm()
 
     return render(request, 'courses/add_lesson.html', {'form': form, 'course': course})
+
+
+@login_required
+def profile(request):
+    # Try to get the profile, but if it doesn't exist (Old user), create it now!
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'courses/profile.html', {'form': form})

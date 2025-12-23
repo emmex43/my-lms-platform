@@ -1,0 +1,35 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+<div class="form-card" style="text-align: center;">
+    <h2 style="color: #2c3e50;">My Profile</h2>
+
+    {% if user.profile.profile_pic %}
+        <img src="{{ user.profile.profile_pic.url }}" 
+             style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #3498db; margin-bottom: 20px;">
+    {% else %}
+        <div style="width: 150px; height: 150px; background: #ddd; border-radius: 50%; margin: 0 auto 20px; line-height: 150px; font-size: 3rem;">👤</div>
+    {% endif %}
+
+    <h3 style="margin-top: 0;">{{ user.username }}</h3>
+    <p style="color: #7f8c8d;">{{ user.email }}</p>
+
+    <hr>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group" style="text-align: left;">
+            <label>Update Bio:</label>
+            {{ form.bio }}
+        </div>
+
+        <div class="form-group" style="text-align: left;">
+            <label>Change Picture:</label>
+            {{ form.profile_pic }}
+        </div>
+
+        <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Save Changes</button>
+    </form>
+</div>
+{% endblock %}
