@@ -9,6 +9,8 @@ class Course(models.Model):
         User, related_name='courses_taught', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
+    course_image = models.ImageField(
+        upload_to='course_images/', blank=True, null=True)
     image_url = models.URLField(default="https://placehold.co/600x400")
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -38,6 +40,8 @@ class Lesson(models.Model):
     CORRECT_CHOICES = [('A', 'A'), ('B', 'B'), ('C', 'C')]
     correct_answer = models.CharField(
         max_length=1, choices=CORRECT_CHOICES, blank=True, null=True)
+    lesson_file = models.FileField(
+        upload_to='lesson_files/', blank=True, null=True, help_text="Upload PDF, PPT, or ZIP")
 
     class Meta:
         ordering = ['order']

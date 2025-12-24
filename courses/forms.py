@@ -6,7 +6,7 @@ from .models import Course, Lesson, Profile
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ['title', 'description', 'image_url']
+        fields = ['title', 'description', 'image_url', 'course_image']
         # We add the CSS classes here instead of in the HTML!
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter course title'}),
@@ -18,7 +18,7 @@ class CourseForm(forms.ModelForm):
 class LessonForm(forms.ModelForm):
     class Meta:
         model = Lesson
-        fields = ['title', 'content', 'video_url', 'order', 'quiz_question',
+        fields = ['title', 'content', 'video_url', 'order', 'lesson_file', 'quiz_question',
                   'option_a', 'option_b', 'option_c', 'correct_answer']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),

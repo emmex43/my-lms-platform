@@ -21,6 +21,25 @@
     </div>
     {% endif %}
 
+    <div class="lesson-content">
+        {{ lesson.content|linebreaks }}
+    </div>
+
+    {% if lesson.lesson_file %}
+    <div
+        style="margin-top: 30px; padding: 20px; background-color: #f1f8ff; border-left: 5px solid #3498db; border-radius: 4px;">
+        <h4 style="margin-top: 0; color: #2c3e50;">📂 Lesson Materials</h4>
+        <p>Download the resources for this lecture:</p>
+        <a href="{{ lesson.lesson_file.url }}" class="btn"
+            style="background-color: #34495e; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px;"
+            download>
+            ⬇️ Download File
+        </a>
+    </div>
+    {% endif %}
+
+    <hr style="margin: 40px 0;">
+
     <div class="lesson-content" style="font-size: 1.1rem; line-height: 1.6;">
         {{ lesson.content|linebreaks }}
     </div>

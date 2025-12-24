@@ -22,7 +22,7 @@
                 <span style="margin-right: 15px;">Hello, {{ user.username }}</span>
                 <a href="{% url 'create_course' %}" style="margin-right: 15px; color: #f1c40f;">Teach</a>
 
-                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                <form action="{% url 'account_logout' %}" method="post" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit"
                         style="background: none; border: none; color: #ecf0f1; cursor: pointer; font-size: 1rem;">Logout</button>
@@ -38,8 +38,9 @@
                     </a>
                 </form>
                 {% else %}
-                <a href="{% url 'login' %}">Login</a>
-                <a href="{% url 'signup' %}" style="background: #3498db; padding: 5px 10px; border-radius: 4px;">Sign
+                <a href="{% url 'account_login' %}">Login</a>
+                <a href="{% url 'account_signup' %}"
+                    style="background: #3498db; padding: 5px 10px; border-radius: 4px;">Sign
                     Up</a>
                 {% endif %}
             </div>

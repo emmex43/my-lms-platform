@@ -3,18 +3,18 @@
 {% block content %}
 <div class="form-card">
     <h2 style="text-align: center; color: #34495e;">Add Lesson to "{{ course.title }}"</h2>
-    
-    <form method="post">
+
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        
+
         {% for field in form %}
-            <div class="form-group">
-                <label style="font-weight: bold; display: block; margin-bottom: 5px;">{{ field.label }}</label>
-                {{ field }}
-                {% if field.help_text %}
-                    <small style="color: #7f8c8d;">{{ field.help_text }}</small>
-                {% endif %}
-            </div>
+        <div class="form-group">
+            <label style="font-weight: bold; display: block; margin-bottom: 5px;">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+            <small style="color: #7f8c8d;">{{ field.help_text }}</small>
+            {% endif %}
+        </div>
         {% endfor %}
 
         <button type="submit" class="btn" style="width: 100%; margin-top: 10px; background-color: #27ae60;">

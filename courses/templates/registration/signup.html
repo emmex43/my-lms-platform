@@ -1,16 +1,27 @@
 {% extends 'courses/base.html' %}
-
-{% block content %}
+{% load socialaccount %} {% block content %}
 <div
     style="max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-    <h2 style="text-align: center;">Join the Platform</h2>
+
+    <h2 style="text-align: center; margin-bottom: 20px;">Join the Platform</h2>
+
+    <a href="{% provider_login_url 'google' %}" class="btn"
+        style="background-color: #DB4437; color: white; width: 100%; display: block; margin-bottom: 20px; text-decoration: none; text-align: center;">
+        <span style="margin-right: 10px; font-weight: bold;">G</span> Sign up with Google
+    </a>
+
+    <div style="display: flex; align-items: center; margin: 20px 0;">
+        <hr style="flex-grow: 1; border: 0; border-top: 1px solid #ccc;">
+        <span style="padding: 0 10px; color: #777;">OR</span>
+        <hr style="flex-grow: 1; border: 0; border-top: 1px solid #ccc;">
+    </div>
 
     <form method="post">
         {% csrf_token %}
 
         {% for field in form %}
         <div style="margin-bottom: 15px;">
-            <label style="display:block; margin-bottom: 5px;">{{ field.label }}</label>
+            <label style="display:block; margin-bottom: 5px; font-weight: bold;">{{ field.label }}</label>
             {{ field }}
             {% if field.help_text %}
             <small style="color: #666; display: block; margin-top: 5px;">{{ field.help_text }}</small>
@@ -21,7 +32,7 @@
         </div>
         {% endfor %}
 
-        <button type="submit" class="btn" style="width: 100%;">Sign Up</button>
+        <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Sign Up</button>
     </form>
 
     <p style="text-align: center; margin-top: 20px;">

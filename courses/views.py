@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import CourseForm, LessonForm, ProfileForm
 from .models import Course, Lesson, Profile
 
+
 # 1. View to list all courses
 
 
@@ -89,12 +90,13 @@ def enroll_course(request, course_id):
 @login_required
 def create_course(request):
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        # 👇 ADD request.FILES HERE
+        form = CourseForm(request.POST, request.FILES)
         if form.is_valid():
             course = form.save(commit=False)
             course.instructor = request.user
             course.save()
-            return redirect('dashboard')
+            return redirect('course_list')
     else:
         form = CourseForm()
     return render(request, 'courses/create_course.html', {'form': form})
@@ -147,7 +149,7 @@ def add_lesson(request, course_id):
         return render(request, 'courses/error.html', {'message': "You don't have permission!"})
 
     if request.method == 'POST':
-        form = LessonForm(request.POST)
+        form = LessonForm(request.POST, request.FILES)
         if form.is_valid():
             lesson = form.save(commit=False)
             lesson.course = course

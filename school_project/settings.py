@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'courses',
+    'django.contrib.sites',       # Required by allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',  # Google Provider
 ]
 
 MIDDLEWARE = [
@@ -48,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'school_project.urls'
@@ -127,7 +133,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Where to go after login
-LOGIN_REDIRECT_URL = 'course_list'
-# Where to go after logout
-LOGOUT_REDIRECT_URL = 'course_list'
+SITE_ID = 1
+
+# Allauth Configuration
+LOGIN_REDIRECT_URL = 'course_list'  # Where to go after logging in
+LOGOUT_REDIRECT_URL = 'course_list'  # Where to go after logging out
+ACCOUNT_EMAIL_VERIFICATION = "none"  # Simplify for now (optional later)
+LOGIN_URL = 'account_login'
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',  # Needed for Google login
+]

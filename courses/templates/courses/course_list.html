@@ -1,14 +1,111 @@
 {% extends 'courses/base.html' %}
 
 {% block content %}
-  <h1>Available Courses</h1>
-  {% for course in courses %}
+<div class="container" style="max-width: 1200px;">
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+    <h1 style="color: #2c3e50;">Explore Courses</h1>
+    {% if user.is_authenticated %}
+    <a href="{% url 'create_course' %}" class="btn" style="background: #27ae60; color: white;">+ New Course</a>
+    {% endif %}
+  </div>
+
+  <div class="course-grid">
+    {% for course in courses %}
     <div class="course-card">
-        <h2>{{ course.title }}</h2>
-        <p>{{ course.description }}</p>
-        <a href="{% url 'course_detail' course.id %}">View Course</a>
+      <div class="card-image">
+        {% if course.course_image %}
+        <img src="{{ course.course_image.url }}" alt="{{ course.title }}">
+        {% else %}
+        <div class="placeholder-img">📚</div>
+        {% endif %}
+      </div>
+
+      <div class="card-content">
+        <h3>{{ course.title }}</h3>
+        <p style="color: #666; font-size: 0.9rem;">Instructor: {{ course.instructor.username }}</p>
+        <p>{{ course.description|truncatewords:15 }}</p>
+
+        <a href="{% url 'course_detail' course.id %}" class="btn-outline">View Course</a>
+      </div>
     </div>
-  {% empty %}
+    {% empty %}
     <p>No courses available yet.</p>
-  {% endfor %}
+    {% endfor %}
+  </div>
+
+</div>
+
+<style>
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .course-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    border: 1px solid #eee;
+  }
+
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-image {
+    height: 180px;
+    background: #f0f0f0;
+    overflow: hidden;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .placeholder-img {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3498db, #8e44ad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .card-content h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.25rem;
+    color: #2c3e50;
+  }
+
+  .btn-outline {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    border: 2px solid #3498db;
+    color: #3498db;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+
+  .btn-outline:hover {
+    background: #3498db;
+    color: white;
+  }
+</style>
 {% endblock %}
