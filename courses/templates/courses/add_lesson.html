@@ -4,15 +4,25 @@
 <div class="form-card">
     <h2 style="text-align: center; color: #34495e;">Add Lesson to "{{ course.title }}"</h2>
 
+    {{ form.media }}
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         {% for field in form %}
         <div class="form-group">
             <label style="font-weight: bold; display: block; margin-bottom: 5px;">{{ field.label }}</label>
+
             {{ field }}
+
             {% if field.help_text %}
             <small style="color: #7f8c8d;">{{ field.help_text }}</small>
+            {% endif %}
+
+            {% if field.errors %}
+            <div style="color: red; font-size: 0.9em;">
+                {{ field.errors }}
+            </div>
             {% endif %}
         </div>
         {% endfor %}

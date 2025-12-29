@@ -8,6 +8,7 @@ urlpatterns = [
     path('courses/', include('courses.urls')),
     path('', include('courses.urls')),
     path('accounts/', include('allauth.urls')),  # Allauth URLs
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 # This allows image uploads to work during development

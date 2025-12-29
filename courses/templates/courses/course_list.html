@@ -23,14 +23,34 @@
 
       <div class="card-content">
         <h3>{{ course.title }}</h3>
-        <p style="color: #666; font-size: 0.9rem;">Instructor: {{ course.instructor.username }}</p>
-        <p>{{ course.description|truncatewords:15 }}</p>
+        <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">
+          {{ course.description|truncatewords:20 }}
+        </p>
 
         <a href="{% url 'course_detail' course.id %}" class="btn-outline">View Course</a>
+
+        <div
+          style="display: flex; align-items: center; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+          {% if course.instructor.profile.profile_pic %}
+          <img src="{{ course.instructor.profile.profile_pic.url }}" alt="{{ course.instructor.username }}"
+            style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+          {% else %}
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: #ddd; margin-right: 10px;"></div>
+          {% endif %}
+
+          <div>
+            <p style="margin: 0; font-weight: bold; font-size: 0.9rem; color: #333;">
+              {{ course.instructor.username }}
+            </p>
+            <p style="margin: 0; font-size: 0.75rem; color: #777;">
+              {{ course.instructor.profile.title|default:"Instructor" }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
     {% empty %}
-    <p>No courses available yet.</p>
+    <p>No courses found. Be the first to add one!</p>
     {% endfor %}
   </div>
 
@@ -50,6 +70,8 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
     border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
   }
 
   .course-card:hover {
@@ -82,6 +104,9 @@
 
   .card-content {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 
   .card-content h3 {
@@ -93,7 +118,7 @@
   .btn-outline {
     display: block;
     text-align: center;
-    margin-top: 15px;
+    margin-top: auto;
     padding: 10px;
     border: 2px solid #3498db;
     color: #3498db;

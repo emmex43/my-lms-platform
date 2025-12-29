@@ -22,7 +22,7 @@
     {% endif %}
 
     <div class="lesson-content">
-        {{ lesson.content|linebreaks }}
+        {{ lesson.content|safe }}
     </div>
 
     {% if lesson.lesson_file %}
@@ -37,12 +37,6 @@
         </a>
     </div>
     {% endif %}
-
-    <hr style="margin: 40px 0;">
-
-    <div class="lesson-content" style="font-size: 1.1rem; line-height: 1.6;">
-        {{ lesson.content|linebreaks }}
-    </div>
 
     <hr style="margin: 40px 0;">
 
