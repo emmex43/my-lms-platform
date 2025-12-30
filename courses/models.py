@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.utils import timezone
 
 
 class Course(models.Model):
@@ -85,3 +86,28 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+class LiveSession(models.Model):
+    course = models.ForeignKey(
+        Course, related_name='live_sessions', on_delete=models.CASCADE)
+    title = models.CharField(
+        max_length=200, help_text="Topic of this live class")
+    meeting_id = models.CharField(max_length=100, unique=True, blank=True)
+    start_time = models.DateTimeField(default=timezone.now)
+    is_active = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        # Auto-generate a unique meeting ID if not provided
+        if not self.meeting_id:
+            import uuid
+            # Creates a random string like 'tch101-4821'
+            self.meeting_id = f"{self.course.title[:3].replace(' ', '')}-{str(uuid.uuid4())[:8]}"
+        super().save(*args, **kwargs)
+
+    def get_join_url(self):
+        # Generates the secure Jitsi link
+        return f"https://meet.jit.si/{self.meeting_id}"
+
+    def __str__(self):
+        return f"Live: {self.title} ({self.course.title})"
